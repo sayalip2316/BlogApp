@@ -7,10 +7,6 @@ const jwt=require("jsonwebtoken");
 UserRouter.post("/register",async(req,res)=>{
     const{Username, Avatar, Email, Password}=req.body;
     try {
-        const user=await UserModel.findOne({Email})
-        if(user){
-            return res.send({msg:"User already exist You can directly Login"})
-        }else{
             bcrypt.hash(Password,5,async(err,hash)=>{
                 if(err){
                     res.status(400).send({msg:"Something went wrong"})
@@ -21,7 +17,7 @@ UserRouter.post("/register",async(req,res)=>{
                     res.status(200).send({msg:"Registration successfull!!"})
                 }
             })
-        }
+        
     } catch (error) {
         res.status(400).send({error:error.message})
     }
@@ -45,4 +41,5 @@ UserRouter.post("/login",async(req,res)=>{
         res.status(400).send({msg:"login failed"})
     }
 })
+
 module.exports={UserRouter}
