@@ -18,7 +18,10 @@ BlogRouter.get("/blogs",async(req,res)=>{
             const blogs=await BlogModel.find().sort({date:sortvalue})
         return res.status(200).json(blogs)
         }
-        
+        if(!title && category && sort){
+            const blogs=await BlogModel.find({category:category}).sort({date:sortvalue})
+        return res.status(200).json(blogs)
+        }
         const blogs=await BlogModel.find()
         res.status(200).json(blogs)
     } catch (error) {
